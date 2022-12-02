@@ -429,10 +429,9 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => a.country.localeCompare(b.country) || a.city.localeCompare(b.city));
 }
-
 /**
  * Creates an identity matrix of the specified size
  *
@@ -451,8 +450,24 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  let num = 0;
+  let matrix = [];
+  function getRow(i) {
+    const row = Array.from({ length: n }, (el, ind) => {
+      if (ind === i) {
+        return 1;
+      }
+      return 0;
+    });
+    return row;
+  }
+  matrix = Array.from({ length: n }, () => {
+    num += 1;
+    matrix.push(getRow(num - 1));
+    return matrix;
+  });
+  return matrix[0];
 }
 
 /**
@@ -468,8 +483,21 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  let length;
+  if (start >= 0) {
+    length = end - start + 1;
+  } else {
+    length = Math.abs(start) + end + 1;
+  }
+
+  const array = new Array(length).fill(0);
+  let x = start;
+  return array.map(() => {
+    const elem = x;
+    x += 1;
+    return elem;
+  });
 }
 
 /**
@@ -483,8 +511,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return [...new Set(arr)];
 }
 
 /**
@@ -575,8 +603,19 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length === 1) {
+    return arr;
+  } if (arr.length === 3) {
+    return [arr[2], arr[1], arr[0]];
+  } if (arr.length % 2 === 0) {
+    const head = arr.slice(0, arr.length / 2);
+    const tail = arr.slice(arr.length / 2);
+    return [...tail, ...head];
+  }
+  const head = arr.slice(0, arr.length / 2);
+  const tail = arr.slice(arr.length / 2 + 1);
+  return [...tail, arr[Math.floor(arr.length / 2)], ...head];
 }
 
 
