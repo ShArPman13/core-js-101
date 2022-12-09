@@ -350,37 +350,9 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(string) {
-  const str = string.split('');
-  if (str.length % 2 !== 0) {
-    return false;
-  }
-  return false;
+function isBracketsBalanced(/* str */) {
+  throw new Error('Not implemented');
 }
-//   const openBr = ['{', '[', '(', '<'];
-//   const closeBr = ['}', ']', ')', '>'];
-//   const stack = [];
-
-//   for (let i = 0; i < str.length; i += 0) {
-//     const currentSymbol = str[i];
-//     const topStackElement = stack[stack.length - 1];
-
-//     if (openBr.includes(currentSymbol)) { // если текущий символ - открытая скобка
-//       stack.push(currentSymbol);
-//       if (currentSymbol === topStackElement) { // если топстэк тоже одинаковая скобка
-//         stack.pop();
-//       } else {
-//         stack.push(currentSymbol);
-//       }
-//     } else if (openBr[closeBr.indexOf(currentSymbol)]
-//     === topStackElement) { // если текущий символ - закрытая скобка
-//       stack.pop();
-//     } else {
-//       return false;
-//     }
-//   }
-//   return stack.length === 0;
-// }
 
 
 /**
