@@ -188,8 +188,10 @@ function isInsideCircle(circle, point) {
  */
 function findFirstSingleChar(str) {
   const array = str.split('');
+
   for (let i = 0; i < array.length; i += 1) {
-    if (array.slice(i + 1).indexOf(array[i]) === -1) {
+    if ((array.slice(i + 1).indexOf(array[i]) === -1)
+    && (array.slice(0, i).indexOf(array[i])) === -1) {
       return array[i];
     }
   }
@@ -219,8 +221,13 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const min = Math.min(a, b);
+  const max = Math.max(a, b);
+  const left = isStartIncluded ? '[' : '(';
+  const right = isEndIncluded ? ']' : ')';
+
+  return `${left}${min}, ${max}${right}`;
 }
 
 
@@ -236,8 +243,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -253,8 +260,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return Number(String(num).split('').reverse().join(''));
 }
 
 
@@ -278,8 +285,20 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const cardNumberArray = String(ccn).split('');
+  let sum = 0;
+  let doubleDigit = false;
+  for (let i = cardNumberArray.length - 1; i >= 0; i -= 1) {
+    let digit = +cardNumberArray[i];
+    if (doubleDigit) {
+      digit *= 2;
+      if (digit > 9) { digit -= 9; }
+    }
+    sum += digit;
+    doubleDigit = !doubleDigit;
+  }
+  return sum % 10 === 0;
 }
 
 /**
@@ -296,8 +315,17 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const numArray = String(num).split('');
+  let sum = 0;
+  for (let i = 0; i < numArray.length; i += 1) {
+    const digit = +numArray[i];
+    sum += digit;
+  }
+  if (sum < 9) {
+    return sum;
+  }
+  return getDigitalRoot(sum);
 }
 
 
@@ -322,9 +350,37 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(string) {
+  const str = string.split('');
+  if (str.length % 2 !== 0) {
+    return false;
+  }
+  return false;
 }
+//   const openBr = ['{', '[', '(', '<'];
+//   const closeBr = ['}', ']', ')', '>'];
+//   const stack = [];
+
+//   for (let i = 0; i < str.length; i += 0) {
+//     const currentSymbol = str[i];
+//     const topStackElement = stack[stack.length - 1];
+
+//     if (openBr.includes(currentSymbol)) { // если текущий символ - открытая скобка
+//       stack.push(currentSymbol);
+//       if (currentSymbol === topStackElement) { // если топстэк тоже одинаковая скобка
+//         stack.pop();
+//       } else {
+//         stack.push(currentSymbol);
+//       }
+//     } else if (openBr[closeBr.indexOf(currentSymbol)]
+//     === topStackElement) { // если текущий символ - закрытая скобка
+//       stack.pop();
+//     } else {
+//       return false;
+//     }
+//   }
+//   return stack.length === 0;
+// }
 
 
 /**
