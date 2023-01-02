@@ -135,8 +135,11 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  return (rect1.left < rect2.left + rect2.width)
+  && (rect1.top < rect2.top + rect2.height)
+  && (rect2.left < rect1.left + rect1.width)
+  && (rect2.top < rect1.top + rect1.height);
 }
 
 
@@ -350,8 +353,21 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const open = ['(', '{', '<', '['];
+  const close = [')', '}', '>', ']'];
+
+  const stack = [];
+  for (let i = 0; i < str.length; i += 1) {
+    const indexTopStackInOpen = open.indexOf(stack[stack.length - 1]);
+
+    if (open.includes(str[i])) {
+      stack.push(str[i]);
+    } else if (str[i] === close[indexTopStackInOpen]) {
+      stack.pop();
+    } else return false;
+  }
+  return !stack.length;
 }
 
 
@@ -375,8 +391,17 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  const res = [];
+  let result = '';
+  let temp = num;
+  while (temp >= n) {
+    res.push(temp % n);
+    temp = Math.floor(temp / n);
+  }
+  res.push(temp);
+  result = res.reverse().join('');
+  return result;
 }
 
 
@@ -450,8 +475,28 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  switch (true) {
+    case position[0][0] === 'X' && position[0][1] === 'X' && position[0][2] === 'X':
+    case position[0][0] === 'X' && position[1][0] === 'X' && position[2][0] === 'X':
+    case position[0][1] === 'X' && position[1][1] === 'X' && position[2][1] === 'X':
+    case position[0][2] === 'X' && position[1][2] === 'X' && position[2][2] === 'X':
+    case position[0][0] === 'X' && position[1][1] === 'X' && position[2][2] === 'X':
+    case position[0][2] === 'X' && position[1][1] === 'X' && position[2][0] === 'X':
+    case position[1][0] === 'X' && position[1][1] === 'X' && position[1][2] === 'X':
+    case position[2][0] === 'X' && position[2][1] === 'X' && position[2][2] === 'X': return 'X';
+
+    case position[0][0] === '0' && position[0][1] === '0' && position[0][2] === '0':
+    case position[0][0] === '0' && position[1][0] === '0' && position[2][0] === '0':
+    case position[0][1] === '0' && position[1][1] === '0' && position[2][1] === '0':
+    case position[0][2] === '0' && position[1][2] === '0' && position[2][2] === '0':
+    case position[0][0] === '0' && position[1][1] === '0' && position[2][2] === '0':
+    case position[0][2] === '0' && position[1][1] === '0' && position[2][0] === '0':
+    case position[1][0] === '0' && position[1][1] === '0' && position[1][2] === '0':
+    case position[2][0] === '0' && position[2][1] === '0' && position[2][2] === '0': return '0';
+
+    default: return undefined;
+  }
 }
 
 
